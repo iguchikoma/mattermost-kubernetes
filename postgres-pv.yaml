@@ -11,7 +11,7 @@ spec:
     storage: 5Gi
   accessModes:
     - ReadWriteMany
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Retain
   nfs:
     server: 127.0.0.1
     path: /export/nfs/mattermost-postgres-pv
