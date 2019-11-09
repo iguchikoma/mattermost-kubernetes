@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: mattermost
+  labels:
+    app: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - image: postgres:9
+        name: postgres
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5432
+          name: postgres
+        envFrom:
+          - configMapRef:
+              name: postgres-config
+        volumeMounts:
+        - name: mattermost-postgres-pv
+          mountPath: /var/lib/postgresql/data 
+      volumes:
+      - name: mattermost-postgres-pv
+        persistentVolumeClaim:
+          claimName: mattermost-postgres-pvc

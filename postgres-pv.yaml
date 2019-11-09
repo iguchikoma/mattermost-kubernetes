@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mattermost-postgres-pv
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "slow"
+  labels:
+    name: mattermost-postgres-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: 127.0.0.1
+    path: /export/nfs/mattermost-postgres-pv
